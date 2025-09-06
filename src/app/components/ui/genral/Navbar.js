@@ -23,8 +23,8 @@ export default function Navbar() {
   }, []);
 
   const phoneNumbers = [
-    { label: 'Official Contact', number: '+91 62804-05570' },
-    { label: 'Emergency', number: '+91 78892-87161' }
+    { label: 'Official Contact', number: '+91 97812-78770' },
+    { label: 'Emergency', number: '+91 97812-78770' }
   ];
 
   const navLinks = [
@@ -50,7 +50,7 @@ export default function Navbar() {
     },
     { 
       icon: <FaWhatsapp className="h-6 w-6" />, 
-      href: 'https://wa.me/7889287161?text=Hi%2C%20I%20am%20interested%20in%20your%20services%20at%20Colour%20Sense%20Salon.%20Could%20you%20please%20help%20me%20with%20more%20details%3F',
+      href: 'https://wa.me/9781278770?text=Hi%2C%20I%20am%20interested%20in%20your%20services%20at%20Colour%20Sense%20Salon.%20Could%20you%20please%20help%20me%20with%20more%20details%3F',
       name: 'WhatsApp' 
     }
   ];
@@ -58,6 +58,41 @@ export default function Navbar() {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
     document.body.style.overflow = isOpen ? '' : 'hidden';
+  };
+
+  // Animation variants for smoother transitions
+  const menuVariants = {
+    closed: {
+      x: "100%",
+      transition: {
+        type: "spring",
+        damping: 25,
+        stiffness: 200,
+        mass: 0.5,
+        delay: 0.1
+      }
+    },
+    open: {
+      x: 0,
+      transition: {
+        type: "spring",
+        damping: 25,
+        stiffness: 200,
+        mass: 0.5,
+        staggerChildren: 0.05,
+        when: "beforeChildren"
+      }
+    }
+  };
+
+  const itemVariants = {
+    closed: { opacity: 0, x: 20 },
+    open: { opacity: 1, x: 0 }
+  };
+
+  const iconVariants = {
+    closed: { rotate: 0 },
+    open: { rotate: 90 }
   };
 
   return (
@@ -89,7 +124,7 @@ export default function Navbar() {
                 className="object-contain"
               />
             </div>
-            <span className="hidden sm:inline-block text-lg md:text-xl">Colour Sense</span>
+            <span className="hidden sm:inline-block text-lg md:text-xl">Truck driving</span>
           </motion.div>
 
           {/* Desktop Links */}
@@ -210,22 +245,28 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button - Enhanced with smoother animation */}
           <motion.button
             className="lg:hidden text-black focus:outline-none z-50 relative -top-4 pl-[40%]"
             onClick={toggleMenu}
             whileTap={{ scale: 0.95 }}
             aria-label="Toggle menu"
           >
-            {isOpen ? (
-              <XMarkIcon className="h-8 w-8" />
-            ) : (
-              <Bars3Icon className="h-8 w-8" />
-            )}
+            <motion.div
+              animate={isOpen ? "open" : "closed"}
+              variants={iconVariants}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              {isOpen ? (
+                <XMarkIcon className="h-8 w-8" />
+              ) : (
+                <Bars3Icon className="h-8 w-8" />
+              )}
+            </motion.div>
           </motion.button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu - Enhanced with smoother animation */}
         <AnimatePresence>
           {isOpen && (
             <>
@@ -234,24 +275,29 @@ export default function Navbar() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
                 className="fixed inset-0 bg-black/60 lg:hidden z-40"
                 onClick={toggleMenu}
               />
               
               {/* Menu Items */}
               <motion.div
-                initial={{ x: "100%" }}
-                animate={{ x: 0 }}
-                exit={{ x: "100%" }}
-                transition={{ type: "spring", damping: 20, stiffness: 200 }}
+                variants={menuVariants}
+                initial="closed"
+                animate="open"
+                exit="closed"
                 className="fixed top-0 right-0 w-full max-w-sm h-full bg-white/95 backdrop-blur-sm text-black flex flex-col z-40 shadow-2xl"
               >
-               
+
                 
                 <div className="flex-1 overflow-y-auto pt-16 pb-24 px-6">
-                  {navLinks.map((item) => (
-                    <div key={item.name} className="mb-4">
+                  {navLinks.map((item, index) => (
+                    <motion.div 
+                      key={item.name} 
+                      className="mb-4"
+                      variants={itemVariants}
+                      transition={{ delay: index * 0.05 }}
+                    >
                       {item.dropdown ? (
                         <>
                           <button
@@ -259,9 +305,12 @@ export default function Navbar() {
                             className="flex justify-between items-center w-full text-2xl font-medium py-4 border-b border-gray-200"
                           >
                             {item.name}
-                            <ChevronDownIcon 
-                              className={`h-6 w-6 transition-transform ${isVerificationOpen ? 'rotate-180' : ''}`} 
-                            />
+                            <motion.div
+                              animate={{ rotate: isVerificationOpen ? 180 : 0 }}
+                              transition={{ duration: 0.3 }}
+                            >
+                              <ChevronDownIcon className="h-6 w-6" />
+                            </motion.div>
                           </button>
                           
                           <AnimatePresence>
@@ -270,17 +319,24 @@ export default function Navbar() {
                                 initial={{ opacity: 0, height: 0 }}
                                 animate={{ opacity: 1, height: 'auto' }}
                                 exit={{ opacity: 0, height: 0 }}
+                                transition={{ duration: 0.3, ease: "easeInOut" }}
                                 className="pl-4"
                               >
-                                {item.dropdown.map((dropdownItem) => (
-                                  <Link
+                                {item.dropdown.map((dropdownItem, dIndex) => (
+                                  <motion.div
                                     key={dropdownItem.name}
-                                    href={dropdownItem.href}
-                                    className="block text-xl py-3 text-gray-700 border-b border-gray-200"
-                                    onClick={toggleMenu}
+                                    initial={{ opacity: 0, x: 10 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: dIndex * 0.05 }}
                                   >
-                                    {dropdownItem.name}
-                                  </Link>
+                                    <Link
+                                      href={dropdownItem.href}
+                                      className="block text-xl py-3 text-gray-700 border-b border-gray-200"
+                                      onClick={toggleMenu}
+                                    >
+                                      {dropdownItem.name}
+                                    </Link>
+                                  </motion.div>
                                 ))}
                               </motion.div>
                             )}
@@ -295,25 +351,32 @@ export default function Navbar() {
                           {item.name}
                         </Link>
                       )}
-                    </div>
+                    </motion.div>
                   ))}
                   
                   {/* Phone Numbers in Mobile Menu */}
-                  <div className="mt-8">
+                  <motion.div 
+                    className="mt-8"
+                    variants={itemVariants}
+                    transition={{ delay: 0.3 }}
+                  >
                     <div className="text-xl font-medium text-gray-700 mb-3">
                       Contact Numbers
                     </div>
                     {phoneNumbers.map((phone, index) => (
-                      <a
+                      <motion.a
                         key={index}
                         href={`tel:${phone.number.replace(/\D/g, '')}`}
                         className="block py-2 text-gray-700"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.4 + (index * 0.1) }}
                       >
                         <div className="font-medium">{phone.label}</div>
                         <div className="text-blue-600">{phone.number}</div>
-                      </a>
+                      </motion.a>
                     ))}
-                  </div>
+                  </motion.div>
                 </div>
               </motion.div>
             </>
