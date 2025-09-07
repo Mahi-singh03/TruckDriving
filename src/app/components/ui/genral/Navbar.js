@@ -30,14 +30,16 @@ export default function Navbar() {
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Gallery', href: '/gallery' },
-    { name: 'Achievements', href: '/achievements' },
-    { name: 'About', href: '/about' },
+    { name: 'Admissions', href: '/admissions' },
+    { name: 'schedule', href: '/schedule' },
+    { name: 'About Us', href: '/aboutUs' },
+
     { 
-      name: 'Verification', 
+      name: 'Extras', 
       href: '#', 
       dropdown: [
-        { name: 'Staff', href: '/staff' },
-        { name: 'Student', href: '/student' }
+        { name: 'FAQs', href: '/FAQs' },
+        { name: 'Blogs', href: '/blog' }
       ] 
     },
   ];
@@ -215,7 +217,7 @@ export default function Navbar() {
           </motion.ul>
 
           {/* Desktop Social Icons and Phone */}
-          <div className="hidden lg:flex items-center gap-4 relative -top-4 pl-[15%]">
+          <div className="hidden lg:flex items-center gap-4 relative -top-4 pl-[10%]">
             {/* Phone Dropdown */}
             <div className="relative">
               <motion.button

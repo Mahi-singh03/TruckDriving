@@ -1,11 +1,10 @@
-import Navbar from "./components/ui/genral/Navbar";
-import Carousel from "./components/ui/home/carousel";
+import Navbar from "@/app/components/ui/genral/Navbar";
+
 export default function Home() {
   return (
     <>
     <Navbar/>
-    <Carousel/>
-    <hi>i am coder</hi>
+    <hi>i am admin</hi>
     </>
   );
 }
