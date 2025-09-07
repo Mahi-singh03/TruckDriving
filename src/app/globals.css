@@ -24,3 +24,14 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Ensure links are visible and consistent */
+a,
+a:visited {
+  color: var(--foreground);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

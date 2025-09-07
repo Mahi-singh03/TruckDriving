@@ -45,7 +45,7 @@ export default function Navbar() {
   const socialLinks = [
     { 
       icon: <FaInstagram className="h-6 w-6" />, 
-      href: 'https://www.instagram.com/colorsense_salon/', 
+      href: 'https://www.instagram.com/hii.mahii/', 
       name: 'Instagram' 
     },
     { 
@@ -100,7 +100,7 @@ export default function Navbar() {
       <nav
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
           isScrolled 
-            ? "h-[100px] md:h-[120px] shadow-md" 
+            ? "h-[140px] md:h-[170px] shadow-md" 
             : "h-[140px] md:h-[170px]"
         }`}
         style={{
@@ -108,22 +108,27 @@ export default function Navbar() {
         }}
       >
         {/* Navbar container */}
-        <div className="flex  items-center h-full px-4 md:px-12">
+        <div className="flex items-center h-full px-4">
           {/* Logo */}
           <motion.div
-            className="text-black font-bold text-2xl cursor-pointer flex items-center relative -top-4 pl-26"
+            className="text-black font-bold text-2xl cursor-pointer flex items-center relative -top-4 pl-30"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
+            whileHover={{ scale: 1.05 }}
           >
-            <div className="relative w-12 h-12 mr-3">
+            <motion.div 
+              className="relative w-12 h-12 mr-3"
+              whileHover={{ rotate: [0, -5, 0] }}
+              transition={{ duration: 0.5 }}
+            >
               <Image
                 src="/logo.png"
                 alt="Logo"
                 fill
                 className="object-contain"
               />
-            </div>
+            </motion.div>
             <span className="hidden sm:inline-block text-lg md:text-xl">Truck driving</span>
           </motion.div>
 
@@ -147,10 +152,18 @@ export default function Navbar() {
                     onMouseEnter={() => setIsVerificationOpen(true)}
                     onMouseLeave={() => setIsVerificationOpen(false)}
                   >
-                    <button className="flex items-center hover:text-gray-300 transition-colors relative">
+                    <motion.button 
+                      className="flex items-center hover:text-red-600 transition-colors relative"
+                      whileHover={{ scale: 1.05 }}
+                    >
                       {item.name}
-                      <ChevronDownIcon className="ml-1 h-4 w-4" />
-                    </button>
+                      <motion.div
+                        animate={{ rotate: isVerificationOpen ? 180 : 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <ChevronDownIcon className="ml-1 h-4 w-4" />
+                      </motion.div>
+                    </motion.button>
                     
                     <AnimatePresence>
                       {isVerificationOpen && (
@@ -159,18 +172,23 @@ export default function Navbar() {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -10 }}
                           transition={{ duration: 0.2 }}
-                          className="absolute left-0 mt-2 w-48 bg-white/95 rounded-md shadow-lg py-1 z-50 border border-gray-200"
+                          className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-yellow-400"
                           onMouseEnter={() => setIsVerificationOpen(true)}
                           onMouseLeave={() => setIsVerificationOpen(false)}
                         >
                           {item.dropdown.map((dropdownItem) => (
-                            <Link
+                            <motion.div
                               key={dropdownItem.name}
-                              href={dropdownItem.href}
-                              className="block px-4 py-2 text-black hover:bg-gray-100"
+                              whileHover={{ x: 5 }}
+                              transition={{ type: "spring", stiffness: 400, damping: 17 }}
                             >
-                              {dropdownItem.name}
-                            </Link>
+                              <Link
+                                href={dropdownItem.href}
+                                className="block px-4 py-2 text-black hover:bg-red-50 hover:text-red-600"
+                              >
+                                {dropdownItem.name}
+                              </Link>
+                            </motion.div>
                           ))}
                         </motion.div>
                       )}
@@ -179,10 +197,17 @@ export default function Navbar() {
                 ) : (
                   <Link
                     href={item.href}
-                    className="hover:text-gray-300 transition-colors relative py-1"
+                    className="hover:text-red-600 transition-colors relative py-1"
                   >
-                    {item.name}
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 hover:w-full"></span>
+                    <motion.span
+                      whileHover={{ scale: 1.05 }}
+                    >
+                      {item.name}
+                    </motion.span>
+                    <motion.span 
+                      className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-600 transition-all duration-300 hover:w-full"
+                      whileHover={{ width: "100%" }}
+                    />
                   </Link>
                 )}
               </motion.li>
@@ -195,8 +220,8 @@ export default function Navbar() {
             <div className="relative">
               <motion.button
                 onClick={() => setIsPhoneOpen(!isPhoneOpen)}
-                className="text-black hover:text-gray-300"
-                whileHover={{ scale: 1.1 }}
+                className="text-black hover:text-red-600"
+                whileHover={{ scale: 1.1, color: "#dc2626" }}
                 whileTap={{ scale: 0.9 }}
               >
                 <IoIosCall className="h-6 w-6" />
@@ -209,20 +234,24 @@ export default function Navbar() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute right-0 mt-2 w-56 bg-white/95 rounded-md shadow-lg py-1 z-50 border border-gray-200"
+                    className="absolute right-0 mt-2 w-56 bg-white rounded-md shadow-lg py-1 z-50 border border-yellow-400"
                   >
-                    <div className="px-4 py-2 font-medium text-black border-b border-gray-200">
+                    <div className="px-4 py-2 font-medium text-black border-b border-gray-200 bg-red-50">
                       Contact Numbers
                     </div>
                     {phoneNumbers.map((phone, index) => (
-                      <a
+                      <motion.a
                         key={index}
                         href={`tel:${phone.number.replace(/\D/g, '')}`}
-                        className="block px-4 py-2 text-black hover:bg-gray-100"
+                        className="block px-4 py-2 text-black hover:bg-red-50 hover:text-red-600"
+                        initial={{ opacity: 0, x: 10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        whileHover={{ x: 5 }}
                       >
                         <div className="font-medium">{phone.label}</div>
-                        <div className="text-blue-600">{phone.number}</div>
-                      </a>
+                        <div className="text-red-600">{phone.number}</div>
+                      </motion.a>
                     ))}
                   </motion.div>
                 )}
@@ -236,8 +265,8 @@ export default function Navbar() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-black hover:text-gray-300"
-                whileHover={{ scale: 1.1 }}
+                className="text-black hover:text-red-600"
+                whileHover={{ scale: 1.1, color: "#dc2626" }}
                 whileTap={{ scale: 0.9 }}
               >
                 {social.icon}
@@ -251,6 +280,7 @@ export default function Navbar() {
             onClick={toggleMenu}
             whileTap={{ scale: 0.95 }}
             aria-label="Toggle menu"
+            whileHover={{ scale: 1.1 }}
           >
             <motion.div
               animate={isOpen ? "open" : "closed"}
@@ -286,10 +316,8 @@ export default function Navbar() {
                 initial="closed"
                 animate="open"
                 exit="closed"
-                className="fixed top-0 right-0 w-full max-w-sm h-full bg-white/95 backdrop-blur-sm text-black flex flex-col z-40 shadow-2xl"
+                className="fixed top-0 right-0 w-full max-w-sm h-full bg-white text-black flex flex-col z-40 shadow-2xl border-l-2 border-yellow-400"
               >
-
-                
                 <div className="flex-1 overflow-y-auto pt-16 pb-24 px-6">
                   {navLinks.map((item, index) => (
                     <motion.div 
@@ -300,9 +328,11 @@ export default function Navbar() {
                     >
                       {item.dropdown ? (
                         <>
-                          <button
+                          <motion.button
                             onClick={() => setIsVerificationOpen(!isVerificationOpen)}
                             className="flex justify-between items-center w-full text-2xl font-medium py-4 border-b border-gray-200"
+                            whileHover={{ color: "#dc2626" }}
+                            whileTap={{ scale: 0.98 }}
                           >
                             {item.name}
                             <motion.div
@@ -311,7 +341,7 @@ export default function Navbar() {
                             >
                               <ChevronDownIcon className="h-6 w-6" />
                             </motion.div>
-                          </button>
+                          </motion.button>
                           
                           <AnimatePresence>
                             {isVerificationOpen && (
@@ -320,7 +350,7 @@ export default function Navbar() {
                                 animate={{ opacity: 1, height: 'auto' }}
                                 exit={{ opacity: 0, height: 0 }}
                                 transition={{ duration: 0.3, ease: "easeInOut" }}
-                                className="pl-4"
+                                className="pl-4 border-l-2 border-red-600 ml-2"
                               >
                                 {item.dropdown.map((dropdownItem, dIndex) => (
                                   <motion.div
@@ -331,7 +361,7 @@ export default function Navbar() {
                                   >
                                     <Link
                                       href={dropdownItem.href}
-                                      className="block text-xl py-3 text-gray-700 border-b border-gray-200"
+                                      className="block text-xl py-3 text-gray-700 border-b border-gray-200 hover:text-red-600"
                                       onClick={toggleMenu}
                                     >
                                       {dropdownItem.name}
@@ -345,10 +375,15 @@ export default function Navbar() {
                       ) : (
                         <Link
                           href={item.href}
-                          className="block text-2xl font-medium py-4 border-b border-gray-200"
+                          className="block text-2xl font-medium py-4 border-b border-gray-200 hover:text-red-600"
                           onClick={toggleMenu}
                         >
-                          {item.name}
+                          <motion.span
+                            whileHover={{ x: 5 }}
+                            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                          >
+                            {item.name}
+                          </motion.span>
                         </Link>
                       )}
                     </motion.div>
@@ -356,24 +391,25 @@ export default function Navbar() {
                   
                   {/* Phone Numbers in Mobile Menu */}
                   <motion.div 
-                    className="mt-8"
+                    className="mt-8 p-4 bg-red-50 rounded-lg border border-yellow-400"
                     variants={itemVariants}
                     transition={{ delay: 0.3 }}
                   >
-                    <div className="text-xl font-medium text-gray-700 mb-3">
+                    <div className="text-xl font-medium text-red-800 mb-3">
                       Contact Numbers
                     </div>
                     {phoneNumbers.map((phone, index) => (
                       <motion.a
                         key={index}
                         href={`tel:${phone.number.replace(/\D/g, '')}`}
-                        className="block py-2 text-gray-700"
+                        className="block py-2 text-gray-700 hover:text-red-600"
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.4 + (index * 0.1) }}
+                        whileHover={{ x: 5 }}
                       >
                         <div className="font-medium">{phone.label}</div>
-                        <div className="text-blue-600">{phone.number}</div>
+                        <div className="text-red-600">{phone.number}</div>
                       </motion.a>
                     ))}
                   </motion.div>
@@ -385,30 +421,39 @@ export default function Navbar() {
       </nav>
       
       {/* Mobile Social Bar - Always visible on mobile */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 py-3 px-6 z-40 flex justify-around items-center">
-        <a
+      <motion.div 
+        className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t-2 border-yellow-400 py-3 px-6 z-40 flex justify-around items-center"
+        initial={{ y: 100 }}
+        animate={{ y: 0 }}
+        transition={{ type: "spring", damping: 20, stiffness: 200 }}
+      >
+        <motion.a
           href={`tel:${phoneNumbers[0].number.replace(/\D/g, '')}`}
-          className="flex flex-col items-center text-black"
+          className="flex flex-col items-center text-black hover:text-red-600"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
         >
           <IoIosCall className="h-7 w-7" />
           <span className="text-xs mt-1">Call</span>
-        </a>
+        </motion.a>
         {socialLinks.map((social) => (
-          <a
+          <motion.a
             key={social.name}
             href={social.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-col items-center text-black"
+            className="flex flex-col items-center text-black hover:text-red-600"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
           >
             {social.icon}
             <span className="text-xs mt-1">{social.name}</span>
-          </a>
+          </motion.a>
         ))}
-      </div>
+      </motion.div>
       
       {/* Padding to account for fixed navbar and social bar on mobile */}
-      <div className={`pt-[140px] pb-20 lg:pt-0 lg:pb-0 ${isScrolled ? 'pt-[100px] lg:pt-[120px]' : 'pt-[140px] lg:pt-[170px]'}`}></div>
+      <div className={`pt-[140px] lg:pt-0 lg:pb-0 ${isScrolled ? 'pt-[100px] lg:pt-[120px]' : 'pt-[140px] lg:pt-[170px]'}`}></div>
     </>
   );
 }

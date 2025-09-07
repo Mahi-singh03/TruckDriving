@@ -1,13 +1,11 @@
 import Navbar from "./components/ui/genral/Navbar";
 import Carousel from "./components/ui/home/carousel";
-import Footer from "./components/ui/genral/footer";
 export default function Home() {
   return (
     <>
     <Navbar/>
     <Carousel/>
     <hi>i am coder</hi>
-    <Footer/>
     </>
   );
 }
