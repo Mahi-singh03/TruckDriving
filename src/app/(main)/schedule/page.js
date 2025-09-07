@@ -2,7 +2,7 @@ export default function Home() {
   return (
     <>
     
-    <hi>Schadual</hi>
+    <h1>Schadual</h1>
     </>
   );
 }

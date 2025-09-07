@@ -2,7 +2,7 @@ export default function Home() {
   return (
     <>
     
-    <hi>FAQ</hi>
+    <h1>FAQ</h1>
     </>
   );
 }
